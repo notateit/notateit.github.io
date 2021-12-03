@@ -1,0 +1,2 @@
+# Notate
+Notate is a lightweight, web-based, and extensible to-do list/note taking application. The code is very flexible, so feel free to modify it and change around any styling or Javascript to fit to your standards/needs. All of Notate's code is licensed under [The Unlicense](LICENSE), meaning that it is both freely available in the public domain as well as freely available for private use. Have fun!
