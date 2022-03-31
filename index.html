@@ -8,16 +8,16 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link rel="apple-touch-icon" href="ios.png">
 		<style>
-			div.topnav { overflow: hidden; background-color: #000; position: fixed; top: 0; width: 100%; height: 3em; }
 			body { margin: 0; font-family: Arial; font-size: large; overflow-wrap: break-word; }
-			input.input { background-color: #000; border: none; color: #FFF; outline: none; font-size: large; width: 100%; padding: 0; font-family: Arial;}
-			button.input-button { border: none; background-color: #000; color: #FFF; font-size: large; width: 100%; font-family: Arial;}
+			.topnav { overflow: hidden; background-color: #000; position: fixed; top: 0; width: 100%; height: 3em; }
+			.input { background-color: #000; border: none; color: #FFF; outline: none; font-size: large; width: 100%; padding: 0; font-family: Arial;}
+			.input-button { border: none; background-color: #000; color: #FFF; font-size: large; width: 100%; font-family: Arial; }
+			.button { width: 3em; }
 			ul { padding-top: 3em; padding-left: 3em; list-style-type: none; }
 			li { margin-bottom: 10px; }
-			li:hover { color: #585858; text-decoration: line-through; }
+			li:hover { color: #585858; }
 			table { padding: 0; width: 100%; border: none; margin: none; height: 3em; border-collapse: collapse; }
-			tr,td { padding: 0; border: none; }
-			td.button { width: 3em; }
+			tr, td { padding: 0; border: none; }
 		</style>
 	</head>
 	<body>
@@ -25,54 +25,54 @@
 			<table>
 				<tr>
 					<td class="button"><button class="input-button" onclick="addItem()">+</button></td>
-					<td><input class="input" id="input" placeholder="Add item..."></input></td>
+					<td><input class="input" id="input" placeholder="..."></input></td>
 				</tr>
 			</table>
 		</div>
 
-		<ul class="todos" id="todos"></ul>
+		<ul class="items" id="items"></ul>
 
 		<script>
-			var todoList = document.getElementById('todos');
-			var existingTodos = JSON.parse(localStorage.getItem('todos')) || [];
-			var todoData = [];
+			var itemList = document.getElementById('items');
+			var existingItems = JSON.parse(localStorage.getItem('items')) || [];
+			var itemData = [];
 			var itemCount = 0;
 
 			function addItem()
 			{
 				if(document.getElementById("input").value != "") {
-					todoData.push(document.getElementById("input").value);
+					itemData.unshift(document.getElementById("input").value);
 					reList();
 				}
 			}
 
 			function removeItem(coord)
 			{
-				todoData.splice(coord, 1);
+				itemData.splice(coord, 1);
 				reList();
 			}
 
 			function reList()
 			{
-				document.getElementById("todos").innerHTML = "";
+				document.getElementById("items").innerHTML = "";
 				itemCount = 0;
 
-				todoData.forEach(todo => {
-					document.getElementById("todos").innerHTML += '<li id="' + itemCount.toString() + '" onclick="removeItem(' + itemCount.toString() + ')">' + todo + "</li>";
+				itemData.forEach(item => {
+					document.getElementById("items").innerHTML += '<li id="' + itemCount.toString() + '" onclick="removeItem(' + itemCount.toString() + ')">' + item + "</li>";
 					itemCount++;
 				});
 
 				document.getElementById("input").value = "";
-				localStorage.setItem('todos', JSON.stringify(todoData));
+				localStorage.setItem('items', JSON.stringify(itemData));
 			}
 
-			existingTodos.forEach(todo => {
-				todoData.push(todo);
+			existingItems.forEach(item => {
+				itemData.push(item);
 				reList();
 			});
 			
 			document.getElementById("input").addEventListener("keypress", function onEvent(event) {
-				if(event.key == "Enter") { addItem(); }
+				if(event.key == "Enter" || event.keyCode == 13) { addItem(); }
 			});
 		</script>
 	</body>
